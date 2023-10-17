@@ -30,4 +30,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: Kernel
-        path: ./out/arch/arm64/kernel
+        path: ./out/arch/arm64/boot

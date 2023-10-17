@@ -1,0 +1,33 @@
+name: Build with KernelSU
+
+on:
+  push:
+    branches:
+      - lineage-20
+  workflow_dispatch: 
+
+jobs:
+  build:
+    if: github.event.repository.owner.id == github.event.sender.id
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout kernel source
+      uses: actions/checkout@v2
+    - name: Download KernelSU sources
+      run: |
+        curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -
+    - name: Android kernel build
+      uses: lemniskett/android-kernel-actions@master
+      id: build
+      env:
+        NAME: meowstarmoe
+      with:
+        arch: arm64
+        compiler: clang/14
+        defconfig: lineage_oneplus5_defconfig
+        image: Image.gz-dtb
+    - name: Deliver KernelInfo
+      uses: actions/upload-artifact@v2
+      with:
+        name: Kernel
+        path: ./out/arch/arm64/kernel

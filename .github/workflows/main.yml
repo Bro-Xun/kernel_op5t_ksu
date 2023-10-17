@@ -14,8 +14,12 @@ jobs:
     - name: Checkout kernel source
       uses: actions/checkout@v2
     - name: Download KernelSU sources
+      #run: |
+      #  curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -
       run: |
-        curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -
+        git clone https://github.com/tiann/KernelSU
+        bash ./KernelSU/kernel/setup.sh
+        
     - name: Android kernel build
       uses: lemniskett/android-kernel-actions@master
       id: build

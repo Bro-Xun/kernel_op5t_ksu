@@ -19,6 +19,7 @@ jobs:
       run: |
         git clone https://github.com/tiann/KernelSU
         bash ./KernelSU/kernel/setup.sh
+        sed -i "s/^KSU_GIT_VERSION.*/KSU_GIT_VERSION :=$(calc 10200+$(cd KernelSU; git rev-list --count HEAD))/" ./KernelSU/kernel/Makefile
         
     - name: Android kernel build
       uses: lemniskett/android-kernel-actions@master
